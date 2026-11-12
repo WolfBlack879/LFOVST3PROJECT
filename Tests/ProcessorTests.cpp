@@ -89,6 +89,16 @@ int main()
         CHECK (r.finite && r.minL < 0.01f && r.minL > -0.001f && r.maxL > 0.99f && r.maxL < 1.001f);
     }
 
+    {   // Whole-number parameters are shown without stray decimals.
+        auto p = makeProcessor();
+        set (*p, ids::cutoff, 479.059f);
+        set (*p, ids::phase, 50.4f);
+        set (*p, ids::smooth, 20.84f);
+        CHECK (p->apvts.getParameter (ids::cutoff)->getCurrentValueAsText() == "479 Hz");
+        CHECK (p->apvts.getParameter (ids::phase)->getCurrentValueAsText().startsWith ("50") && ! p->apvts.getParameter (ids::phase)->getCurrentValueAsText().contains ("."));
+        CHECK (p->apvts.getParameter (ids::smooth)->getCurrentValueAsText() == "20.8 ms");
+    }
+
     {   // Mix at 0 % leaves the signal untouched.
         auto p = makeProcessor();
         set (*p, ids::mix, 0.0f);
