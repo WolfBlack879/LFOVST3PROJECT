@@ -49,7 +49,11 @@ const std::vector<Preset>& presets()
 auto floatAttr (juce::String suffix, int decimals)
 {
     return juce::AudioParameterFloatAttributes().withStringFromValueFunction (
-        [suffix, decimals] (float v, int) { return juce::String (v, decimals) + suffix; });
+        [suffix, decimals] (float v, int)
+        {
+            // juce::String (v, 0) means "as many decimals as needed", so round whole numbers ourselves.
+            return (decimals == 0 ? juce::String (juce::roundToInt (v)) : juce::String (v, decimals)) + suffix;
+        });
 }
 
 std::unique_ptr<juce::AudioParameterFloat> floatParam (const char* id, const char* name, juce::NormalisableRange<float> range,
