@@ -79,6 +79,7 @@ ctest --test-dir build -C Release --output-on-failure
 - **MIDI in and out of an effect depends on the host.** Retrigger, One-Shot and MIDI CC output need your DAW to route MIDI to and from an audio effect. Most do (Ableton Live, Bitwig, Reaper, Cubase, FL Studio); how you set it up differs per DAW.
 - A VST3 cannot directly modulate parameters of *other* plugins. To do that, send the MIDI CC output to the other plugin and use its MIDI learn.
 - Tempo sync assumes 120 bpm when the host gives no tempo (for example in the standalone app).
+- This was completely vibe-coded with Fable 5.2 by Antrhopic.
 
 ## Project layout
 
